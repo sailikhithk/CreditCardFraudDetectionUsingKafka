@@ -29,8 +29,6 @@ Created a producer and a consumer and created messages for a topic and let consu
 
 Built the **data pipeline** to process credit card transactions in realtime to classify if fraudulent or authentic (based on user's buying pattern) and approve or deny the transaction. For the approved transaction, we batched the transaction details and created a billing statement at monthly time scale. 
 
-Please be creative to carry this out. The following steps are suggested list of things you need to do.
-
 [![Architecture Diagram](./images/architecture-diagram.png)](https://stream.nyu.edu/media/slkrrcitTask3/1_1bh2sh2v)
 
 We have a producer and consumer which is subscribed to kafka topics which has transactions related data. 
