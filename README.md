@@ -49,4 +49,4 @@ In order to have a realworld kinda scalable analysis, we initially created a sim
 
 ## Project Demo
 
-[![Demo](./images/thumbnail.png)](https://stream.nyu.edu/media/slkrrcitTask3/1_1bh2sh2v)
+[![Demo](./images/thumbnail.png)](https://drive.google.com/file/d/1vl3sKwucwJFk4xrHHxfaGHcfMMvhr3BB/view?usp=sharing)
