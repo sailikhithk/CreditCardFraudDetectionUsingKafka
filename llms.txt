@@ -1,0 +1,95 @@
+# CreditCardFraudDetectionUsingKafka
+
+> Real-time credit card fraud detection and billing pipeline built with Apache Kafka, Spark EMR, AWS Lambda, and the ELK stack. Processes transactions in real time, classifies fraudulent vs authentic based on user buying patterns, and generates monthly billing statements for approved transactions.
+
+CreditCardFraudDetectionUsingKafka is a distributed data pipeline project that demonstrates real-time stream processing for financial fraud detection. It was built as an NYU course project and covers three integrated pipelines: an ELK stack for log processing and visualization, a Kafka producer-consumer setup on EC2, and a final fraud detection pipeline that combines Kafka topics, Spark EMR streaming, AWS Lambda for fraud classification, and S3/QuickSight for analytics.
+
+## Architecture
+
+```
+Source -> Apache Kafka -> Consumer -> Spark EMR streams -> Listeners
+  |
+  +-- Topic 1 (approval request) -> Spark -> Listener 1 -> Lambda (fraud check)
+  |     |-> reject message -> Kafka topic
+  |     |-> approve message -> Kafka topic
+  |
+  +-- Topic 2 (transaction details) -> Spark ETL -> DynamoDB/RDS -> Monthly billing
+```
+
+## Three pipelines
+
+### Part 1: ELK Stack (Elasticsearch, Logstash, Kibana)
+
+- Installed on EC2 instance
+- Log processing using Apache logs
+- Kibana visualizations: logs per country, city, cloud, time
+- Logstash ingestion pipeline
+
+### Part 2: Kafka and Spark Setup
+
+- Kafka producer and consumer on EC2 instances
+- Topic-based messaging with Spark EMR streaming
+- Message production and consumption demo
+
+### Part 3: Fraud Detection and Billing Pipeline
+
+- Two Kafka topics: approval request and transaction details
+- Topic 1: Kafka -> Spark streams -> Listener 1 -> Lambda function
+  - Lambda checks user buying profile (buying place, purchase amount)
+  - Anomaly detection: reject if unusual pattern, approve if normal
+- Topic 2: Approved transactions -> Spark ETL -> DynamoDB/RDS
+  - Batch processing for monthly billing statements
+- Scalability: simulator with 100 users and transaction series
+- Storage: S3 buckets
+- Analytics: Amazon QuickSight dashboard for approved/rejected events and billing
+
+## Tech stack
+
+- Apache Kafka (streaming)
+- Apache Spark EMR (stream processing, ETL)
+- AWS Lambda (fraud classification function)
+- AWS EC2 (compute)
+- AWS S3 (storage)
+- AWS DynamoDB / RDS (transaction database)
+- Amazon QuickSight (dashboard and analytics)
+- ELK Stack: Elasticsearch, Logstash, Kibana (log processing)
+- PySpark (EMR processing)
+
+## Key features
+
+- Real-time transaction classification (fraud vs authentic)
+- User buying profile anomaly detection
+- Two-event architecture: approval request then transaction details
+- Batch billing statement generation at monthly scale
+- 100-user simulator for scalability testing
+- QuickSight dashboard for event visualization
+
+## Demo
+
+- Architecture diagram: https://stream.nyu.edu/media/slkrrcitTask3/1_1bh2sh2v
+- Video demo: https://youtu.be/KFP5zBr93xI
+
+## Repository
+
+- Source: https://github.com/sailikhithk/CreditCardFraudDetectionUsingKafka
+- License: MIT
+
+## Other AI/ML work by Sai Likhith Kanuparthi
+
+- [facadedriver](https://github.com/sailikhithk/facadedriver) - Model-agnostic orchestration for multi-LLM production systems: routing, retry, fallback, circuit breakers, per-request telemetry.
+- [mamba-from-scratch](https://github.com/sailikhithk/mamba-from-scratch) - From-scratch S4, Mamba-1 (S6), Mamba-2 (SSD) state-space models in pure PyTorch.
+- [Synthetic-AI-Image-Detector](https://github.com/sailikhithk/Synthetic-AI-Image-Detector) - Multi-signal deepfake detection with calibration, uncertainty quantification, and cross-generator eval.
+- [llm-production-engineering](https://github.com/sailikhithk/llm-production-engineering) - Field notes on LLM serving in production: cost tracking, eval-driven deployment, capacity planning, incident playbooks.
+- [alzheimers-drug-discovery-demo](https://github.com/sailikhithk/alzheimers-drug-discovery-demo) - QSAR machine learning for Alzheimer's drug discovery: predict bioactivity against Beta-amyloid A4 protein.
+- [Project-X](https://github.com/sailikhithk/Project-X) - AI-based video interview platform with automated analysis.
+- [Tags-recommender-system-for-community-forums](https://github.com/sailikhithk/Tags-recommender-system-for-community-forums) - NLP multi-label tag recommender with TF-IDF, neural networks, and active learning.
+
+## Author
+
+Sai Likhith Kanuparthi - Senior AI Infrastructure & Systems Engineer.
+7+ years shipping production AI systems at Airbnb, Southwest Airlines, Shell,
+Eli Lilly, and Oracle. MS Computer Science from NYU.
+
+- GitHub: https://github.com/sailikhithk
+- LinkedIn: https://www.linkedin.com/in/sailikhithk
+- Portfolio: https://sailikhith.me
