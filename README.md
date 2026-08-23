@@ -2,6 +2,12 @@
 
 We had studied indepth about Kafka, Elastic and Spark to establish two data pipeline with several small demos. The first pipeline is ELK stack for processing and visualizing logs in a scalable way. 
 
+## Architecture
+
+![Credit-card fraud detection architecture - Kafka + Spark EMR + Lambda real-time pipeline](./architecture.svg)
+
+**Pipeline:** Producer (100-user simulator, S3) -> Kafka Topic 1 (approval request) -> Spark EMR Listener 1 -> Lambda fraud check (buying profile) -> APPROVE (forward to Topic 2) or REJECT (alert + DLQ) -> Topic 2 (approved txn details) -> Spark EMR ETL -> DynamoDB/RDS -> QuickSight dashboard.
+
 ## Part 1: Setting up my ELK stack (Elastic Search, Logstash, Kibana)
 
 Installed ELK stack into an **EC2 instance** and built a log processing using Apache logs to connect into ELK stack and created a couple visualization graph to show in **Kibana**. **Logstash** visualization is shown for Apache logs generated per country, by city, city cloud, per time. 
@@ -50,3 +56,5 @@ In order to have a realworld kinda scalable analysis, we initially created a sim
 ## Project Demo
 
 [![Demo](./images/thumbnail.png)](https://youtu.be/KFP5zBr93xI)
+
+See [llms.txt](./llms.txt) for an AI-readable project summary and cross-links to related AI/ML work.

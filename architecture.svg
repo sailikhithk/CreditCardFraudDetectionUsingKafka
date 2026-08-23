@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 460" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" role="img" aria-label="Credit-card fraud detection architecture: Kafka + Spark EMR + Lambda real-time pipeline">
+  <defs>
+    <marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fca5a5"/>
+    </marker>
+    <marker id="fk-arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#86efac"/>
+    </marker>
+    <linearGradient id="fk-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <style>
+      .node { fill: #111827; stroke: #334155; stroke-width: 1.2; }
+      .node-kafka { fill: #0e2a3a; stroke: #0ea5e9; stroke-width: 1.5; }
+      .node-spark { fill: #2a1d0e; stroke: #f59e0b; stroke-width: 1.5; }
+      .node-lambda { fill: #2a0e1d; stroke: #ec4899; stroke-width: 1.5; }
+      .node-store { fill: #0e2a1d; stroke: #22c55e; stroke-width: 1.5; }
+      .label { fill: #e2e8f0; font-size: 13px; font-weight: 600; }
+      .sub { fill: #94a3b8; font-size: 10.5px; }
+      .path-flow { stroke: #fca5a5; stroke-width: 1.6; fill: none; opacity: 0.55; }
+      .path-flow-ok { stroke: #86efac; stroke-width: 1.6; fill: none; opacity: 0.55; }
+      .path-reject { stroke: #f87171; stroke-width: 1.4; fill: none; opacity: 0.55; stroke-dasharray: 4 3; }
+      .title { fill: #f1f5f9; font-size: 16px; font-weight: 700; }
+      .caption { fill: #64748b; font-size: 10.5px; }
+    </style>
+  </defs>
+
+  <rect width="980" height="460" fill="url(#fk-bg)"/>
+  <text x="20" y="32" class="title">Credit-Card Fraud Detection - Kafka + Spark EMR Real-time Pipeline</text>
+  <text x="20" y="50" class="caption">Producer - Kafka topics - Spark streaming - Lambda fraud check - DynamoDB - QuickSight</text>
+
+  <!-- Producer -->
+  <g>
+    <rect x="30" y="200" width="120" height="70" rx="10" class="node"/>
+    <text x="90" y="228" text-anchor="middle" class="label">Producer</text>
+    <text x="90" y="245" text-anchor="middle" class="sub">100 users sim</text>
+    <text x="90" y="260" text-anchor="middle" class="sub">S3 source</text>
+  </g>
+
+  <!-- Kafka Topic 1 -->
+  <g>
+    <rect x="200" y="120" width="140" height="70" rx="10" class="node-kafka"/>
+    <text x="270" y="148" text-anchor="middle" class="label">Kafka Topic 1</text>
+    <text x="270" y="165" text-anchor="middle" class="sub">approval request</text>
+    <text x="270" y="180" text-anchor="middle" class="sub">partition keyed</text>
+  </g>
+
+  <!-- Kafka Topic 2 -->
+  <g>
+    <rect x="200" y="280" width="140" height="70" rx="10" class="node-kafka"/>
+    <text x="270" y="308" text-anchor="middle" class="label">Kafka Topic 2</text>
+    <text x="270" y="325" text-anchor="middle" class="sub">transaction details</text>
+    <text x="270" y="340" text-anchor="middle" class="sub">approved only</text>
+  </g>
+
+  <!-- Spark EMR (approval) -->
+  <g>
+    <rect x="400" y="120" width="140" height="70" rx="10" class="node-spark"/>
+    <text x="470" y="148" text-anchor="middle" class="label">Spark EMR L1</text>
+    <text x="470" y="165" text-anchor="middle" class="sub">stream listener</text>
+    <text x="470" y="180" text-anchor="middle" class="sub">idempotent</text>
+  </g>
+
+  <!-- Spark EMR (ETL) -->
+  <g>
+    <rect x="400" y="280" width="140" height="70" rx="10" class="node-spark"/>
+    <text x="470" y="308" text-anchor="middle" class="label">Spark EMR L2</text>
+    <text x="470" y="325" text-anchor="middle" class="sub">ETL batch</text>
+    <text x="470" y="340" text-anchor="middle" class="sub">monthly billing</text>
+  </g>
+
+  <!-- Lambda fraud check -->
+  <g>
+    <rect x="600" y="120" width="140" height="70" rx="10" class="node-lambda"/>
+    <text x="670" y="148" text-anchor="middle" class="label">Lambda</text>
+    <text x="670" y="165" text-anchor="middle" class="sub">fraud detection</text>
+    <text x="670" y="180" text-anchor="middle" class="sub">buying profile</text>
+  </g>
+
+  <!-- Approve / Reject split -->
+  <g>
+    <rect x="800" y="80" width="140" height="60" rx="10" class="node" stroke="#22c55e"/>
+    <text x="870" y="105" text-anchor="middle" class="label" fill="#86efac">APPROVE</text>
+    <text x="870" y="122" text-anchor="middle" class="sub">forward to Topic 2</text>
+  </g>
+  <g>
+    <rect x="800" y="170" width="140" height="60" rx="10" class="node" stroke="#ef4444"/>
+    <text x="870" y="195" text-anchor="middle" class="label" fill="#fca5a5">REJECT</text>
+    <text x="870" y="212" text-anchor="middle" class="sub">alert + DLQ</text>
+  </g>
+
+  <!-- DynamoDB / RDS -->
+  <g>
+    <rect x="600" y="280" width="140" height="70" rx="10" class="node-store"/>
+    <text x="670" y="308" text-anchor="middle" class="label">DynamoDB / RDS</text>
+    <text x="670" y="325" text-anchor="middle" class="sub">transactions</text>
+    <text x="670" y="340" text-anchor="middle" class="sub">billing records</text>
+  </g>
+
+  <!-- QuickSight -->
+  <g>
+    <rect x="800" y="280" width="140" height="70" rx="10" class="node-store"/>
+    <text x="870" y="308" text-anchor="middle" class="label">QuickSight</text>
+    <text x="870" y="325" text-anchor="middle" class="sub">dashboard</text>
+    <text x="870" y="340" text-anchor="middle" class="sub">approved vs rejected</text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- Producer -> Topic 1 -->
+  <path d="M150,225 L200,160" class="path-flow" marker-end="url(#fk-arrow)"/>
+  <!-- Producer -> Topic 2 (approved only, comes from approve branch - drawn later) -->
+  <!-- Topic 1 -> Spark L1 -->
+  <path d="M340,155 L400,155" class="path-flow" marker-end="url(#fk-arrow)"/>
+  <!-- Spark L1 -> Lambda -->
+  <path d="M540,155 L600,155" class="path-flow" marker-end="url(#fk-arrow)"/>
+  <!-- Lambda -> Approve -->
+  <path d="M740,140 L800,110" class="path-flow-ok" marker-end="url(#fk-arrow-green)"/>
+  <!-- Lambda -> Reject -->
+  <path d="M740,170 L800,200" class="path-reject" marker-end="url(#fk-arrow)"/>
+  <!-- Approve -> Topic 2 (loop back) -->
+  <path d="M870,140 Q870,260 340,310" class="path-flow-ok" marker-end="url(#fk-arrow-green)"/>
+  <!-- Topic 2 -> Spark L2 -->
+  <path d="M340,315 L400,315" class="path-flow-ok" marker-end="url(#fk-arrow-green)"/>
+  <!-- Spark L2 -> DynamoDB -->
+  <path d="M540,315 L600,315" class="path-flow-ok" marker-end="url(#fk-arrow-green)"/>
+  <!-- DynamoDB -> QuickSight -->
+  <path d="M740,315 L800,315" class="path-flow-ok" marker-end="url(#fk-arrow-green)"/>
+
+  <!-- Animated packets -->
+  <circle r="4" fill="#fbbf24">
+    <animateMotion dur="2.4s" repeatCount="indefinite" path="M150,225 L200,160"/>
+  </circle>
+  <circle r="4" fill="#fca5a5">
+    <animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite" path="M340,155 L400,155"/>
+  </circle>
+  <circle r="4" fill="#fca5a5">
+    <animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite" path="M540,155 L600,155"/>
+  </circle>
+  <circle r="4" fill="#86efac">
+    <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M740,140 L800,110"/>
+  </circle>
+  <circle r="4" fill="#f87171">
+    <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M740,170 L800,200"/>
+  </circle>
+  <circle r="4" fill="#86efac">
+    <animateMotion dur="3.4s" begin="1.6s" repeatCount="indefinite" path="M870,140 Q870,260 340,310"/>
+  </circle>
+  <circle r="4" fill="#86efac">
+    <animateMotion dur="2.4s" begin="2.4s" repeatCount="indefinite" path="M340,315 L400,315"/>
+  </circle>
+  <circle r="4" fill="#86efac">
+    <animateMotion dur="2.4s" begin="2.8s" repeatCount="indefinite" path="M540,315 L600,315"/>
+  </circle>
+  <circle r="4" fill="#86efac">
+    <animateMotion dur="2.4s" begin="3.2s" repeatCount="indefinite" path="M740,315 L800,315"/>
+  </circle>
+
+  <!-- Legend -->
+  <g transform="translate(20,430)">
+    <circle cx="6" cy="0" r="4" fill="#fbbf24"/>
+    <text x="16" y="4" class="caption">txn in</text>
+    <circle cx="80" cy="0" r="4" fill="#fca5a5"/>
+    <text x="90" y="4" class="caption">approval flow</text>
+    <circle cx="190" cy="0" r="4" fill="#86efac"/>
+    <text x="200" y="4" class="caption">approved txn</text>
+    <circle cx="300" cy="0" r="4" fill="#f87171"/>
+    <text x="310" y="4" class="caption">rejected / DLQ</text>
+  </g>
+</svg>
