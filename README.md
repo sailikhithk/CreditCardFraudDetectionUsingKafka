@@ -1,6 +1,14 @@
-# Credit-Card-fraud-detection-and-billing-using-Kafka
+# Real-Time Credit Card Fraud Detection & Billing Pipeline
 
-We had studied indepth about Kafka, Elastic and Spark to establish two data pipeline with several small demos. The first pipeline is ELK stack for processing and visualizing logs in a scalable way. 
+<p align="center">
+  <img src="https://img.shields.io/badge/Apache%20Kafka-2.8+-231F20?style=flat-square&logo=apachekafka&logoColor=white" alt="Kafka">
+  <img src="https://img.shields.io/badge/Apache%20Spark-Structured%20Streaming-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="Spark">
+  <img src="https://img.shields.io/badge/AWS-Lambda%20%7C%20EMR%20%7C%20DynamoDB-FF9900?style=flat-square&logo=amazonaws&logoColor=white" alt="AWS">
+  <img src="https://img.shields.io/badge/Elasticsearch-ELK%20Stack-005571?style=flat-square&logo=elastic&logoColor=white" alt="ELK">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
+</p>
+
+An end-to-end distributed data streaming and real-time inference pipeline built on Apache Kafka, PySpark Structured Streaming on AWS EMR, and serverless AWS Lambda inference scoring with ELK telemetry. 
 
 ## Architecture
 
